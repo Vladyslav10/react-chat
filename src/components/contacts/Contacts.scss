@@ -34,6 +34,13 @@
         padding: 0px 0px 0px 10px;
     }
 
+    &__err {
+        font-size: 23px;
+        color: red;
+        text-align: center;
+    }
+
+
     &__row {
         display: flex;
         align-items: center;
