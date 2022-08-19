@@ -9,6 +9,7 @@ import avatar08 from '../assets/8.jpg'
 import avatar09 from '../assets/9.jpg'
 import avatar10 from '../assets/10.jpg'
 const SET__CONTACTS = "SET__CONTACTS";
+const SET__ID = "SET__ID";
 
 const defaultState = {
     contacts: [
@@ -74,6 +75,7 @@ const defaultState = {
             name: 'Lana',
         },
     ],
+    id: 0,
 }
 
 export default function contactsReducer (state = defaultState, action) {
@@ -83,7 +85,14 @@ export default function contactsReducer (state = defaultState, action) {
                 ...state,
                 contacts: [...state.contacts, action.payload]
             }
+        case SET__ID:
+            return {
+                ...state,
+                id: action.payload
+            }
         default:
             return state
     }
 }
+
+export const setId = (id) => ({type:SET__ID, payload:id})

@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Chat from './components/chat/chat';
 import Contacts from './components/contacts/Contacts.jsx';
 
 
@@ -12,7 +13,7 @@ function App() {
             <Contacts/>
           </div>
           <div className="row__column row__column-chat">
-
+            <Chat/>
           </div>
         </div>
       </div>

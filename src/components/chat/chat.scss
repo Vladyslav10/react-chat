@@ -1,0 +1,41 @@
+.chat {
+    height: 100vh;
+    display: flex; 
+	flex-direction: column;
+
+    &__top {
+        padding: 10px 15px;
+        border-bottom: 1px solid gray;
+        background-color: rgb(216, 215, 215);
+        min-height: 80px;
+    }
+
+    &__top-row {
+        display: flex;
+        align-items: center;
+    }
+
+    &__img {
+        width: 60px;
+        height: 60px;
+        margin: 0px 10px 0px 0px;
+        & > img {
+            border-radius: 50%;
+        }
+    }
+
+    &__body {
+        flex: 1 1 auto;
+        background-color: rgb(234, 230, 230);
+    }
+
+    &__footer {
+        min-height: 58px;
+        background-color: rgb(216, 215, 215);
+        padding: 10px;
+        border-top: 1px solid gray;
+        & > .input-area {
+            flex-direction: row-reverse;
+        }
+    }
+}

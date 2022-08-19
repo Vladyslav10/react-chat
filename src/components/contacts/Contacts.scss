@@ -1,4 +1,4 @@
-.chat {
+.contacts {
     border-right: 1px solid gray;
     height: 100vh;
     display: flex; 
@@ -67,6 +67,10 @@
         }
     }
 
+    &__column-text {
+        flex: 1 1 auto;
+        display: flex;
+    }
     &__column-avatar {
         width: 70px;
         height: 70px;
@@ -79,5 +83,9 @@
         font-size: 20px;
         font-weight: 500;
         margin: 0px 0px 10px 0px;
+    }
+
+    &__last-message-time {
+        margin-left: auto;
     }
 }
