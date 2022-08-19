@@ -1,0 +1,76 @@
+.chat {
+    border-right: 1px solid gray;
+    height: 100vh;
+    display: flex; 
+	flex-direction: column;
+
+    &__main {
+        background-color: rgb(216, 215, 215);
+        padding: 15px;
+        height: auto;
+        border-bottom: 1px solid gray;
+        z-index: 3;
+    }
+
+    &__img {
+        width: 70px;
+        height: 70px;
+        margin: 0px 0px 15px 0px;
+        & > img {
+            border-radius: 50%;
+        }
+    }
+
+    &__contacts {
+        padding: 20px 0px 0px 0px;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+    &__title {
+        font-size: 26px;
+        color: rgb(77, 165, 253);
+        margin: 0px 0px 30px 0px;
+        padding: 0px 0px 0px 10px;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        padding: 15px 10px;
+        position: relative;
+        &:not(:last-child) {
+            margin: 0px 0px 10px 0px;
+            &::after{
+                content:'';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                height: 0.5px;
+                width: 100%;
+                background-color: rgb(162, 160, 160);
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+    &__column {
+        &:not(:last-child) {
+            margin: 0px 5px 0px 0px;
+        }
+    }
+
+    &__column-avatar {
+        width: 70px;
+        height: 70px;
+        & > img {
+            border-radius: 50%;
+        }
+    }
+
+    &__column-title {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 0px 0px 10px 0px;
+    }
+}

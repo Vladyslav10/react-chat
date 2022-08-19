@@ -1,13 +1,21 @@
 import React from 'react';
 import './App.css';
+import Contacts from './components/contacts/Contacts.jsx';
+
 
 function App() {
   return (
     <div className="App">
-      <div class="wrapper">
+      <div className="wrapper">
+        <div className="row">
+          <div className="row__column row__column-contacts">
+            <Contacts/>
+          </div>
+          <div className="row__column row__column-chat">
 
+          </div>
+        </div>
       </div>
-
     </div>
   );
 }

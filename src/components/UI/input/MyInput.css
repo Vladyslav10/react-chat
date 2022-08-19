@@ -1,0 +1,23 @@
+.input-area {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(153, 150, 150);
+    border-radius: 15px;
+    padding: 0px 5px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.my-input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16;
+}
+
+.my-seach-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
