@@ -27,6 +27,8 @@
     &__body {
         flex: 1 1 auto;
         background-color: rgb(234, 230, 230);
+        padding: 20px 10px;
+        overflow-y: auto;
     }
 
     &__footer {
@@ -38,4 +40,15 @@
             flex-direction: row-reverse;
         }
     }
+}
+
+.tabulation__block {
+	display: none;
+	font-size: 18px;
+	line-height: 24px;
+	padding: 20px;
+}
+
+.tabulation__block.active {
+	display: block;
 }

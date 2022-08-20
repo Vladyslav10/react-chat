@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Chat from './components/chat/chat';
+import Chat from './components/chat/Chat.jsx';
 import Contacts from './components/contacts/Contacts.jsx';
 
 

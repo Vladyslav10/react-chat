@@ -11,10 +11,10 @@ const Contacts = () => {
   const contactsList = useSelector((state) => state.contactsReducer.contacts);
   const [searchQuery, setSeachQuery] = useState('');
   const searchContacts = useMemo(() => {
-        if(searchQuery) {
-            return [...contactsList].filter(el => el.name.toLowerCase().includes(searchQuery.toLowerCase()));
-        } return contactsList;
-    }, [searchQuery, contactsList]);
+    if(searchQuery) {
+        return [...contactsList].filter(el => el.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    } return contactsList;
+  }, [searchQuery, contactsList]);
 
   return (
     <div className="contacts">
