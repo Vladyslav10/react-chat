@@ -44,6 +44,7 @@
     &__row {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         padding: 15px 10px;
         position: relative;
         &:not(:last-child) {
@@ -63,14 +64,21 @@
 
     &__column {
         &:not(:last-child) {
-            margin: 0px 5px 0px 0px;
+            margin: 0px 10px 0px 0px;
         }
     }
 
     &__column-text {
         flex: 1 1 auto;
         display: flex;
+        flex-direction: column;
     }
+
+    &__column-info {
+        display: flex;
+        justify-content: space-between;
+    }
+
     &__column-avatar {
         width: 70px;
         height: 70px;
@@ -82,10 +90,17 @@
     &__column-title {
         font-size: 20px;
         font-weight: 500;
-        margin: 0px 0px 10px 0px;
+        margin: 0px 10px 10px 0px;
     }
 
     &__last-message-time {
-        margin-left: auto;
+        font-size: 12px;
+        text-align: right;
+    }
+    &__last-message-show {
+        max-width: 145px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

@@ -1,70 +1,149 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyInput from "../UI/input/MyInput";
 import send from "../../assets/send.png";
 import "./Chat.scss";
+import dateFormat from 'dateformat';
 import { useSelector } from "react-redux";
-//import {} from '';
-import { db } from "../..";
+import axios from "axios";
 
-const Chat = (props) => {
-  const contactsList = useSelector((state) => state.contactsReducer.contacts);
-  const [value, setValue] = useState('');
-  const contactId = useSelector((state) => state.contactsReducer.id);
-  const curContact = contactsList[contactId - 1];
+const Chat = ({ allMessages, setAllMessages, contactsList, setContactsList }) => {
+  const [value, setValue] = useState("");
+  const selectUser = useSelector(state => state.contactsReducer.selectedUser);
 
-  /*
-  const [messages, loading] = (
-    db.collection('messages').orderBy('createdAt')
-  );
-  */
+  const fromMe = [];
+  const ToMe = [];
+  const [myMess, setMyMess] = useState(fromMe);
+  const [userMess, setUserMess] = useState(ToMe);
+
+  allMessages.map((msg) => {
+    if (msg.contactSendId === selectUser.id && msg.contactReceiveId === 0) {
+      fromMe.push(msg);
+    }
+    if (msg.contactSendId === 0 && msg.contactReceiveId === selectUser.id) {
+      ToMe.push(msg);
+    }
+    return msg;
+  });
+
+  const messagesChannel = [...fromMe, ...ToMe].sort((a, b) => a.id - b.id);
+
   function sendMessage() {
-    /*
-    firestore.collection('messages').add({
-      id: contactsList.id,
-      name: contactsList.name,
+    const newMessage = {
+      id: allMessages[allMessages.length - 1].id + 1,
       text: value,
-      //createdAt: firebase.firestore.F
+      contactSendId: 0,
+      contactReceiveId: selectUser.id,
+      timeadded: Date.now(),
+    };
+    const updated = contactsList.map((contact) =>{
+      if (contact.id === selectUser.id) {
+        contact.lastMesTime = Date.now();
+        contact.lastText = value;
+      }
+      return contact;
     })
-    */
-   console.log(value);
-    setValue('');
-  }; 
+    setContactsList(
+      updated.sort((a, b) => b.lastMesTime - a.lastMesTime)
+    );
+    setMyMess([...myMess, newMessage]);
+    setAllMessages([...allMessages, newMessage]);
+    setValue("");
+  }
+
+  const sendOnEnterKey = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
+  useEffect(() => {
+    if (allMessages[allMessages.length - 1].contactSendId === 0) {
+      setTimeout(getChuckJoke, 10000);
+    }
+  }, [allMessages.length]);
+
+  const getChuckJoke = () => {
+    axios("https://api.chucknorris.io/jokes/random").then(({ data }) => {
+      console.log(data.value)
+      const joke = {
+        id: allMessages[allMessages.length - 1].id + 1,
+        text: data.value,
+        contactSendId: selectUser.id,
+        contactReceiveId: 0,
+        timeadded: Date.now(),
+      };
+      setUserMess([...userMess, joke]);
+      setAllMessages([...allMessages, joke]);
+      const updatedContacts = contactsList.map((contact) => {
+        if (contact.id === selectUser.id) {
+          contact.lastMesTime = Date.now();
+          contact.lastText = data.value;
+        }
+        return contact;
+      });
+      setContactsList(
+        updatedContacts.sort((a, b) => b.lastMesTime - a.lastMesTime)
+      );
+    });
+  };
 
   return (
     <div className="chat">
       <div className="chat__top">
-        {contactId > 0 ? (
+        {Object.keys(selectUser).length !== 0 ? 
           <div className="chat__top-row">
             <div className="chat__img ibg">
-              <img src={curContact.img} alt="avatar" />
+              <img src={selectUser.img} alt="avatar" />
             </div>
-            <p className="chat__name">{curContact.name}</p>
+            <p className="chat__name">{selectUser.name}</p>
           </div>
-        ) : (
-          <div className="chat__top-row"></div>
-        )}
+         : 
+          null
+        }
       </div>
       <div className="chat__body">
-            {contactsList.map(el =>(
-                <div 
-                    key={el.id} 
-                    id={el.id} 
-                    className={contactId === el.id ? "tabulation__block active" : "tabulation__block"}
-                >
-                </div>
-            ))}
+        {messagesChannel.map((messageData) => (
+          <div
+            className={
+              messageData.contactSendId === 0 
+              ? "chat__message-container chat__message-container-your" 
+              : 'chat__message-container chat__message-container-contact'
+            }
+            key={messageData.timeadded}
+          >
+            {messageData.contactSendId === 0 
+              ? 
+              null
+              :
+              <img src={selectUser.img} alt={selectUser.alt} />
+            }
+            <div className="chat__message">
+              <div
+                className={messageData.contactSendId === 0 ? 'chat__your-message' : 'chat__contact-message'}
+              >
+                {messageData.text}
+              </div>
+              <span className="chat__data">
+                {dateFormat(messageData.timeadded, "paddedShortDate")}
+                {", "}
+                {dateFormat(messageData.timeadded, "shortTime")}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
       <div className="chat__footer">
-        {contactId > 0 ? (
+        {selectUser ? (
           <MyInput
-            onChange={e => setValue(e.target.value)}
-            value={value} 
-            icon={send} 
-            description="Type your message" 
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={sendOnEnterKey}
+            value={value}
+            icon={send}
+            description="Type your message"
             message={sendMessage}
           />
         ) : (
-          <div></div>
+          null
         )}
       </div>
     </div>
